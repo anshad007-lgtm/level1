@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipes</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container mt-4">
+        <h1 class="text-center mb-4">Recipes</h1>
+
+        <div class="row" id="recipeList"></div>
+    </div>
+
+    <script>
+        fetch('https://dummyjson.com/recipes')
+            .then(res => res.json())
+            .then(data => {
+                let recipes = data.recipes;
+                let html = "";
+
+                recipes.forEach(recipe => {
+                    html += `
+                        <div class="col-md-4 mb-4">
+                            <div class="card h-100">
+                                <img src="${recipe.image}"
+                                     class="card-img-top"
+                                     alt="${recipe.name}"
+                                     style="height:250px; object-fit:cover;">
+
+                                <div class="card-body text-center">
+                                    <h5 class="card-title">${recipe.name}</h5>
+
+                                    <button class="btn btn-primary"
+                                        onclick="viewDetails(${recipe.id})">
+                                        View Details
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                document.getElementById('recipeList').innerHTML = html;
+            });
+
+        function viewDetails(id) {
+            window.location.href = `second.html?id=${id}`;
+        }
+    </script>
+
+</body>
+</html>
